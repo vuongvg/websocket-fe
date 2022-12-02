@@ -17,7 +17,7 @@ export default function Joinroom() {
    const handleClick = (action) => {
       switch (action) {
          case "create-room":
-            if(!userCtx.username) router.push('/login')
+            if (!userCtx.username) router.push("/login");
             socketClient.emit("createRoom", { roomName: roomCode, userCreate: userID });
             setValueInput(roomCode);
             break;
@@ -27,7 +27,7 @@ export default function Joinroom() {
             socketClient.emit("joinRoom", { room: roomName, userID });
             break;
          case "btn-copy":
-            console.log('copy')
+            console.log("copy");
             const copyText = document.getElementById("room");
             copyText.select();
             copyText.setSelectionRange(0, 99999);
@@ -44,13 +44,15 @@ export default function Joinroom() {
          console.log(`  ~ resultLoginRoom`);
          if (joinRoom) {
             router.push("/room?r=" + document.getElementById("room").value);
-         }else{
+         } else {
             document.getElementById("feedback").innerText = "Someone on the call declined your request to join";
          }
       });
 
-      socketClient.on("joinRoom", ({ userCreate, roomName }) => {
-         console.log(`  ~ { userCreate, roomName }`, { userCreate, roomName, userID });
+      socketClient.on("joinRoom", (data) => {
+         console.log(data.msg);
+         if(data.msg)return document.getElementById("feedback").innerText =data.msg
+         const { userCreate, roomName } = data;
          if (userCreate === userID) {
             router.push("/room?r=" + roomName);
          } else socketClient.emit("LoginRoom", { room: roomName, userID });
@@ -77,7 +79,7 @@ export default function Joinroom() {
                <div className="position-relative me-2 border">
                   <span
                      className="material-symbols-outlined position-absolute ms-2"
-                     style={{ right: "0px", top: "5px",zIndex:1 }}
+                     style={{ right: "0px", top: "5px", zIndex: 1 }}
                      role="button"
                      onClick={() => handleClick("btn-copy")}
                   >

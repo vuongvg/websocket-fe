@@ -1,8 +1,8 @@
 import axios from "axios";
 // import { url } from "./url";
 
-// const url = "http://localhost:5001/api";
- const url = "https://websocket-yrjr.onrender.com/api"; 
+const url = "http://localhost:5001/api";
+//  const url = "https://websocket-yrjr.onrender.com/api"; 
 
 export const fetchApiLogin = async (data) => {
     try {
