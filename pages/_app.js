@@ -16,8 +16,8 @@ import "../styles/globals.css";
 import "../styles/compare.css";
 import "../styles/product-card.css";
 
-const url="http://localhost:5001"
-// const url='https://websocket-yrjr.onrender.com/'
+// const url="http://localhost:5001"
+const url='https://websocket-yrjr.onrender.com/'
 
 function MyApp({ Component, pageProps }) {
    const [user] = useState({ username: null, socketClient: io(url, { transports: ["websocket", "polling"] }) });
