@@ -119,7 +119,7 @@ export default function Room() {
       setInterval(() => {
          socketClient.emit("check", "online");
          console.log(` check`, )
-      }, 2*60* 1000); 
+      }, 60* 1000); 
    }, []);
 
    return (
