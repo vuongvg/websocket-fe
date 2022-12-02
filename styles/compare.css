@@ -1,0 +1,43 @@
+.btn-close {
+   /* background-color: red; */
+   position: absolute;
+   border-radius: 20px;
+   border: 1px solid;
+   font-size: 6px;
+   padding: 5px;
+   /* margin: 5px; */
+   right: 0;
+   z-index: 1054;
+}
+
+#compare-bottom {
+   z-index: 1054;
+}
+
+.compare-bottom-btn {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   margin-top: 5px;
+}
+
+.compare-button-card {
+   min-height: 100px;
+   max-width: 200px;
+}
+
+.onclick-content {
+   max-height: 500px;
+   overflow: scroll;
+}
+
+@media (max-width: 768px) {
+   .bottom-compare .product-details {
+      display: none;
+   }
+   .bottom-compare .compare-bottom-btn {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+   }
+}

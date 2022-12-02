@@ -1,4 +1,4 @@
-const saveJsonFn=() => {
+export const saveJson=(canvas) => {
     const date = new Date().toLocaleTimeString();
     const fileJson = canvas.toJSON();
     downloadFile(JSON.stringify(fileJson), `${date}.json`, "text/json");

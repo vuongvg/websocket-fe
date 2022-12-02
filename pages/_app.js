@@ -6,18 +6,41 @@ import UserContext from "../components/UserContex";
 import { io } from "socket.io-client";
 import { useEffect, useState } from "react";
 import { Button, Modal } from "react-bootstrap";
+import "../styles/vendors/bootstrap.css";
+import "../styles/vendors/font-awesome.css";
+import "../styles/vendors/feather-icon.css";
+import "../styles/vendors/animate.css";
+import "../styles/vendors/slick/slick.css";
+import "../styles/vendors/slick/slick-theme.css";
+import "../styles/globals.css";
+import "../styles/compare.css";
+import "../styles/product-card.css";
+
+// const url="http://localhost:5001"
+const url='https://websocket-yrjr.onrender.com/'
 
 function MyApp({ Component, pageProps }) {
-   const [user] = useState({ username: null, socketClient: io("http://localhost:5001", { transports: ["websocket", "polling"] }) });
+   const [user] = useState({ username: null, socketClient: io(url, { transports: ["websocket", "polling"] }) });
    const [show, setShow] = useState(false);
    const [userJoinRoom, setUserJoinRoom] = useState({});
-   const {socketClient}=user
+   const { socketClient } = user;
 
    const handleClose = (result) => {
-      console.log(`  ~ result`, result)
+      console.log(`  ~ result`, result);
       setShow(false);
-      socketClient.emit("resultLoginRoom", { ...result, ...userJoinRoom });
+      socketClient.emit("resultLoginRoom", { ...result, ...userJoinRoom }); 
    };
+
+   //    useEffect(() => {
+   //       const script = document.createElement('script');
+   //       // You may have to replace this code with your path.
+   //       script.src = "../public/fabric.js";
+   //       script.async = true;
+   //       document.body.appendChild(script);
+   //       return () => {
+   //           document.body.removeChild(script);
+   //       }
+   //   }, []);
 
    useEffect(() => {
       socketClient.on("errorSocket", ({ msg, at }) => {
@@ -43,6 +66,7 @@ function MyApp({ Component, pageProps }) {
             />
             <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
          </Head>
+
          <div className="" id="login_room">
             <Modal show={show} onHide={() => handleClose({ joinRoom: false })}>
                <Modal.Header closeButton>
@@ -58,21 +82,7 @@ function MyApp({ Component, pageProps }) {
                </Modal.Footer>
             </Modal>
          </div>
-         {/* <div id="" class="modal" style="display: flex;justify-content: center;height: 120px;">
-               <div id="" sclass="modal-content animate" style="padding-top: 20px;">
-                  <p style="color: #fff;margin-bottom: 10px;font-size: large;">
-                     aaa
-                  </p>
-                  <div class="">
-                     <button class="rounded" id="btn_yes" style="padding: 10px 30px;margin-left: 30px;">
-                        Yes
-                     </button>
-                     <button class="rounded" id="btn_no" style="padding: 10px  30px;">
-                        No
-                     </button>
-                  </div>
-               </div>
-            </div> */}
+
          <UserContext.Provider value={user}>
             <Navbar>
                <Component {...pageProps} />
@@ -84,6 +94,8 @@ function MyApp({ Component, pageProps }) {
             integrity="sha384-WPFUvHkB1aHA5TDSZi6xtDgkF0wXJcIIxXhC6h8OT8EH3fC5PWro5pWJ1THjcfEi"
             crossorigin="anonymous"
          ></Script>
+         <Script  src="https://unpkg.com/fabric@latest/dist/fabric.js"></Script>
+         {/* <Script   src="https://unpkg.com/fabric@latest/src/mixins/eraser_brush.mixin.js"></Script> */}
       </>
    );
 }

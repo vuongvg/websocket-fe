@@ -33,7 +33,7 @@ export default function Login() {
                   <button type="submit" className="btn btn-primary mb-3">
                      Login
                   </button>
-                  <p>Register</p>
+                  <p role={'button'}>Register</p>
                </div>
             </div>
          </form>

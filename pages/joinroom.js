@@ -17,21 +17,17 @@ export default function Joinroom() {
    const handleClick = (action) => {
       switch (action) {
          case "create-room":
+            if(!userCtx.username) router.push('/login')
             socketClient.emit("createRoom", { roomName: roomCode, userCreate: userID });
             setValueInput(roomCode);
             break;
          case "join-room":
             const roomName = document.getElementById("room").value;
+            document.getElementById("feedback").innerText = "You will join the meeting when someone gives you permission.";
             socketClient.emit("joinRoom", { room: roomName, userID });
-            // if (roomName === roomCode) {
-            //    socketClient.emit("joinRoom", { room: roomName, userID });
-            //    router.push("/room/" + roomCode);
-            // } else {
-            //    console.log("first");
-            //    socketClient.emit("LoginRoom", { room: roomName, userID });
-            // }
             break;
          case "btn-copy":
+            console.log('copy')
             const copyText = document.getElementById("room");
             copyText.select();
             copyText.setSelectionRange(0, 99999);
@@ -47,15 +43,16 @@ export default function Joinroom() {
       socketClient.on("resultLoginRoom", ({ joinRoom, socketIDUser, room, userID }) => {
          console.log(`  ~ resultLoginRoom`);
          if (joinRoom) {
-            
-            router.push("/room/" + document.getElementById("room").value);
+            router.push("/room?r=" + document.getElementById("room").value);
+         }else{
+            document.getElementById("feedback").innerText = "Someone on the call declined your request to join";
          }
       });
 
       socketClient.on("joinRoom", ({ userCreate, roomName }) => {
          console.log(`  ~ { userCreate, roomName }`, { userCreate, roomName, userID });
          if (userCreate === userID) {
-            router.push("/room/" + roomName);
+            router.push("/room?r=" + roomName);
          } else socketClient.emit("LoginRoom", { room: roomName, userID });
       });
    }, []);
@@ -77,10 +74,10 @@ export default function Joinroom() {
 
                <p className="btn my-auto me-2">Or</p>
 
-               <div className="position-relative">
+               <div className="position-relative me-2 border">
                   <span
-                     className="material-symbols-outlined position-absolute "
-                     style={{ right: "20px", top: "5px" }}
+                     className="material-symbols-outlined position-absolute ms-2"
+                     style={{ right: "0px", top: "5px",zIndex:1 }}
                      role="button"
                      onClick={() => handleClick("btn-copy")}
                   >
@@ -89,7 +86,7 @@ export default function Joinroom() {
                   <input
                      name="room"
                      id="room"
-                     className="btn border me-3"
+                     className="btn  me-4"
                      style={{ background: 'url("https://apps.google.com/static/img/keyboard-24px.svg") no-repeat 6px 6px' }}
                      placeholder="Enter meeting code"
                      value={valueInput}
@@ -101,9 +98,10 @@ export default function Joinroom() {
                   Join room
                </button>
             </div>
+            <div className="mt-3 text-danger" id="feedback"></div>
          </div>
          <div className="mx-auto my-auto">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSkku_s0Ae3eR35Vgn-Jl6PWlOLh8O9Re5rDw&usqp=CAU" alt="" />
+            {/* <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSkku_s0Ae3eR35Vgn-Jl6PWlOLh8O9Re5rDw&usqp=CAU" alt="" /> */}
          </div>
       </div>
    );

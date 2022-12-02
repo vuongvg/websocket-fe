@@ -1,0 +1,133 @@
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+ }
+ 
+.product-box {
+}
+
+.img-wrapper {
+   position: relative;
+}
+
+.img-wrapper img {
+   width: 100%;
+   opacity: 1;
+   transition: all 0.3s ease-in;
+}
+
+.img-wrapper .back img {
+   position: absolute;
+   top: 0;
+   opacity: 0;
+}
+
+.img-wrapper:hover .front img {
+   opacity: 0;
+}
+
+.img-wrapper:hover .back img {
+   opacity: 1;
+}
+
+.label-block {
+   position: absolute;
+   top: 2%;
+   right: 5%;
+   background-color: #e22454;
+   color: white;
+   padding: 2px 5px;
+}
+
+.img-wrapper .label .label-theme {
+  font-size: 6px;
+}
+
+.rating-details {
+   display: flex;
+   justify-content: space-between;
+   margin: 10px 0px;
+}
+
+.font-light {
+   font-size: 14px;
+   color: #7e7e7e;
+}
+
+.font-default {
+   font-style: 12px;
+}
+
+.main-price {
+   display: flex;
+   justify-content: space-between;
+}
+
+.theme-color {
+   color: #e22454;
+}
+
+h5 {
+   font-weight: 500;
+   font-size: calc(15px + ((100vw - 320px) / (1920 - 320)));
+}
+
+.img-wrapper .cart-wrap {
+   display: none;
+   position: absolute;
+   bottom: 0px;
+   /* transition: all 2s ease-in; */
+   overflow: hidden;
+}
+
+.img-wrapper:hover .cart-wrap {
+   display: block;
+   position: absolute;
+   bottom: 30px;
+   width: 100%;
+   animation: card 0.5s ease-in-out;
+}
+.img-wrapper:hover .cart-wrap ul li :first-child{
+   animation: card 0.5s ease-in-out;
+}
+.img-wrapper:hover .cart-wrap ul li :nth-child(2){
+   animation: card 0.7s ease-in-out;
+}
+.img-wrapper:hover .cart-wrap ul li :nth-child(3){
+   animation: card 0.9s ease-in-out;
+}
+
+@keyframes card {
+   from {
+      /* bottom: -30px; */
+      opacity: 0;
+      transform: translate3d((0,100%,0));
+   }
+   to {
+      /* bottom: 30px; */
+      opacity: 1;
+      transform: none;
+   }
+}
+
+.cart-wrap ul {
+   display: flex;
+   justify-content: center;
+}
+
+.cart-wrap li a {
+   margin:5px;
+   padding:18px 8px;
+   border: #7e7e7e;
+   background-color: #fff;
+   color: #232323;
+   transition: all 0.5s ease-in;
+   cursor: pointer;
+}
+
+.product-box .cart-wrap a:hover {
+   background-color: #e22454;
+   color: #fff;
+}

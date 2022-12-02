@@ -1,44 +1,26 @@
+class DrawingFree {
+   constructor() {}
+   startDrawing({ canvas }) {
+      canvas.renderAll();
+   }
 
-class DrawingFree{
-   constructor(){}
-   startDrawing  ({ canvas, mouseDown})  {
-      console.log('free')
-      mouseDown = true;
-      canvas.renderAll();
-   };
-   
-   moveDrawing  ({ canvas})  {
+   moveDrawing({ canvas }) {
       canvas.isDrawingMode = true;
+      canvas.freeDrawingCursor = "crosshair";
+      canvas.freeDrawingBrush.width = 1;
+      canvas.freeDrawingBrush.color = '#000';
       canvas.renderAll();
-   };
-   
-   stopDrawing  ({ canvas, socket,mouseDown })  {
-      mouseDown = false;
+   }
+
+   stopDrawing({ canvas, socket }) {
       canvas.isDrawingMode = false;
       canvas.renderAll();
-      const canvasJson = canvas.toJSON();
-      socket.emit("drawing", canvasJson);
-   };
+
+      const dataSaveToServer = canvas.toJSON();
+      socket.emit("drawing", dataSaveToServer);
+   }
 }
 
-const free= new DrawingFree()
+const free = new DrawingFree();
 
-export default free
-
-// export const startDrawing = ({ canvas, obj ,modeDrawing,mouseDown}) => {
-//    mouseDown = true;
-//    canvas.renderAll();
-// };
-
-// export const moveDrawing = ({ canvas, obj, modeDrawing ,mouseDown}) => {
-//    canvas.isDrawingMode = true;
-//    canvas.renderAll();
-// };
-
-// export const stopDrawing = ({ canvas, obj, socket,mouseDown }) => {
-//    mouseDown = false;
-//    canvas.isDrawingMode = false;
-//    canvas.renderAll();
-//    const canvasJson = canvas.toJSON();
-//    socket.emit("drawing", canvasJson);
-// };
+export default free;
