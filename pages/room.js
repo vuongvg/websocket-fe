@@ -18,8 +18,8 @@ export default function Room() {
    const modeDrawing = useRef("");
    console.log("render");
    const { socketClient, username } = userCtx;
-
    useEffect(() => {
+      if (!username) router.push("/login");
       const canvas = new fabric.Canvas("canvas", {
          width: window.innerWidth,
          heigh: window.innerHeight,
@@ -54,7 +54,7 @@ export default function Room() {
 
       canvas.on("mouse:move", (obj) => {
          if (!modeDrawing.current) return;
-         if (!["move",'text'].includes(modeDrawing.current )) {
+         if (!["move", "text"].includes(modeDrawing.current)) {
             lockMove(true);
          } else lockMove(false);
          drawing[modeDrawing.current].moveDrawing({ canvas, obj, mouseDown });
@@ -63,7 +63,7 @@ export default function Room() {
       canvas.on("mouse:up", (obj) => {
          if (!modeDrawing.current) return;
          mouseDown = false;
-         drawing[modeDrawing.current].stopDrawing({ canvas, socket: socketClient ,obj});
+         drawing[modeDrawing.current].stopDrawing({ canvas, socket: socketClient, obj });
       });
 
       // document.getElementById("move-object").addEventListener("click", function () {
@@ -112,7 +112,14 @@ export default function Room() {
          console.log(`  ~ data drawing`, data);
          canvas.loadFromJSON(data, () => canvas.renderAll());
       });
+
       socketClient.emit("load-data", room);
+
+      socketClient.on("check", (data) => console.log(data));
+      setInterval(() => {
+         socketClient.emit("check", "online");
+         console.log(` check`, )
+      }, 5*60* 1000); 
    }, []);
 
    return (
